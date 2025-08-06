@@ -1,0 +1,32 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fef9e7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+h1 {
+  color: #ff6f61;
+  margin-bottom: 20px;
+}
+
+video {
+  width: 100%;
+  max-width: 400px;
+  border: 6px solid #ffccbc;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.message {
+  font-size: 1.5em;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
