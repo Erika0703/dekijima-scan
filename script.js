@@ -1,24 +1,21 @@
-import QrScanner from "./qr-scanner.min.js";
+const scanner = new Html5QrcodeScanner("scanner", { fps: 10, qrbox: 250 });
+scanner.render(onScanSuccess);
 
-const video = document.getElementById("video");
-const message = document.getElementById("message");
+function onScanSuccess(decodedText) {
+  document.getElementById("result").innerText = "読み取り中…";
 
-const scanner = new QrScanner(video, result => {
-  console.log("✅ QRコード読み取り: ", result);
-  scanner.stop();  // 読み取ったら止める
+  // 📌 あなたのApps ScriptのURLに置き換えてね
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbwBWKho20e1J8zc0ZjMzCaapmS2cLWZ5GjzfDjR8McFkGE9RzYZMnBuGz39r5cLBT93/exec";
 
-  // GASのURL（←あなたのに変えてね！）
-  const gasURL = `https://script.google.com/macros/s/AKfycbwBWKho20e1J8zc0ZjMzCaapmS2cLWZ5GjzfDjR8McFkGE9RzYZMnBuGz39r5cLBT93/exec?id=${encodeURIComponent(result)}`;
-
-  fetch(gasURL)
+  fetch(`${scriptUrl}?id=${decodedText}`)
     .then(res => res.text())
-    .then(text => {
-      message.textContent = text;
+    .then(result => {
+      document.getElementById("result").innerText = result;
     })
     .catch(err => {
-      console.error("通信エラー", err);
-      message.textContent = "❌ 通信エラーが発生しました。";
+      console.error(err);
+      document.getElementById("result").innerText = "通信エラーが発生しました。";
     });
-});
 
-scanner.start();
+  scanner.clear(); // 一度読み取ったらスキャンを止める
+}
